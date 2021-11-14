@@ -41,6 +41,7 @@ current_io_0 = False
 current_position_set = False
 
 Q = None
+i = 1
 
 ############## Your Code Start Here ##############
 
@@ -174,7 +175,7 @@ def lab_invk(xWgrip, yWgrip, zWgrip, yaw_WgripDegree):
 
 	xcen = xWgrip - 53.5*(np.cos(np.radians((yaw_WgripDegree))))+150
 	ycen = yWgrip - 53.5*(np.sin(np.radians((yaw_WgripDegree))))-150
-	zcen = zWgrip
+	zcen = zWgrip - 10
 
 	theta1 = np.arctan2(ycen,xcen)-(np.arcsin((l2-l4+l6)/np.sqrt(xcen**2+ycen**2)))
 
@@ -311,6 +312,7 @@ def move_arm(pub_cmd, loop_rate, dest, vel, accel):
 
 def move_block(pub_cmd, loop_rate, start_loc, start_height, end_loc, end_height, thetas):
     global Q
+    global i
 
     ### Hint: Use the Q array to map out your towers by location and "height".
 
@@ -327,7 +329,26 @@ def move_block(pub_cmd, loop_rate, start_loc, start_height, end_loc, end_height,
     # | Q[0][0][0] Q[1][0][0] Q[2][0][0] |   Contact point of bottom block
 
     move_arm(pub_cmd, loop_rate, Q[start_loc][start_height][1], 4.0, 4.0)
-    move_arm(pub_cmd, loop_rate, thetas, 4.0, 4.0)
+    #location = Q[start_loc][start_height][0]
+    location = thetas
+
+    location2 = Q[end_loc][end_height][1]
+    move_arm(pub_cmd, loop_rate,location, 4.0, 4.0)
+
+    # print(location)
+
+    # lab_fk(location[0],location[1],location[2],location[3],location[4],location[5])
+
+
+    # thetas = lab_invk(-510,258,278,90)
+    # print (thetas)
+
+    # print(location2)
+
+    # thetas = lab_invk(-510,258,374,90)
+    # print (thetas)
+
+    gripper(pub_cmd, loop_rate, suction_on)
     time.sleep(0.5)
     val = suction_state
     if val == False:
@@ -335,6 +356,9 @@ def move_block(pub_cmd, loop_rate, start_loc, start_height, end_loc, end_height,
         gripper(pub_cmd, loop_rate, suction_off)
         exit(-1)
 
+    print("Moving Card number: " + str(i) + " from deck to destination. Destination Forward Kinematics:\n")
+    i = i + 1
+    lab_fk(location2[0],location2[1],location2[2],location2[3],location2[4],location2[5])
 
     move_arm(pub_cmd, loop_rate, Q[start_loc][start_height][1], 4.0, 4.0)
     move_arm(pub_cmd, loop_rate, Q[end_loc][end_height][1], 4.0, 4.0)
@@ -438,59 +462,28 @@ def main():
     ############## Your Code Start Here ##############
     # TODO: modify the code below so that program can get user input
 
-    input_done = 0
-    loop_count = 0
+    numPlayers = 0
 
-    while(not input_done):
-        input_string = raw_input("Enter number of loops <Either 1 2 3 or 0 to quit> ")
+    while(numPlayers == 0):
+        input_string = raw_input("Welcome to Poker! Press the number corresponding to how many players (2-5), or 0 to quit> ")
         print("You entered " + input_string + "\n")
 
         if(int(input_string) == 1):
-            loop_count = 1
+            numPlayers = 1
         elif (int(input_string) == 2):
-            loop_count = 2
+            numPlayers = 2
         elif (int(input_string) == 3):
-            loop_count = 3
+            numPlayers = 3
+        elif (int(input_string) == 4):
+            numPlayers = 4
+        elif (int(input_string) == 5):
+            numPlayers = 5
         elif (int(input_string) == 0):
             print("Quitting... ")
             sys.exit()
         else:
             print("Please just enter the character 1 2 3 or 0 to quit \n\n")
             continue
-
-        input_str = raw_input("Start Loc (0, 1, 2): ")
-        print("You entered " + input_str + "\n")
-
-        if(int(input_str) == 0):
-            start = 0
-        elif (int(input_str) == 1):
-            start = 1
-        elif (int(input_str) == 2):
-            start = 2
-        else:
-            print("Error try again")
-            continue
-
-
-        input_str = raw_input("End loc (0, 1, 2): ")
-        print("You entered " + input_str + "\n")
-
-        if(int(input_str) == 0):
-            end = 0
-            input_done = 1
-        elif (int(input_str) == 1):
-            end = 1
-            input_done = 1
-        elif (int(input_str) == 2):
-            end = 2
-            input_done = 1
-        else:
-            print("Error Try again")
-            continue
-
-
-
-
 
     ############### Your Code End Here ###############
 
@@ -504,32 +497,28 @@ def main():
 
     ############## Your Code Start Here ##############
     # TODO: modify the code so that UR3 can move tower accordingly from user input
-
-    if start + end == 3:
-        middle = 0
-    if start + end == 2:
-        middle = 1
-    if start + end == 1:
-        middle = 2
     
     thetas = []
+    start = 0
+    end = 2
 
-    while(loop_count > 0):
-        thetas = lab_invk(-510,258,530,0)
-        move_block(pub_command, loop_rate, start, 2, end, 0,thetas)
-        thetas = lab_invk(-510,258,278,0)
-        move_block(pub_command, loop_rate, start, 2, start, 0, thetas)
-        # move_block(pub_command, loop_rate, end, 2, middle, 1)
-        # move_block(pub_command, loop_rate, start, 2, end, 2)
-        # move_block(pub_command, loop_rate, middle, 1, start, 2)
-        # move_block(pub_command, loop_rate, middle, 2, end, 1)
-        # move_block(pub_command, loop_rate, start, 2, end, 0)
+    print ("Starting Poker setup for " + str(numPlayers) + " players. Deck Location Forward Kinematics:\n")
+    #print(lab_fk[thetas[0],thetas[1],thetas[2],thetas[3],thetas[4],thetas[5]])
 
-        loop_count = loop_count - 1
+    thetas = [2.458071665798306, -1.1802611048778377, 2.119906386765944, -2.3504416086830027,
+    -1.5707963267948966, 0.8872753390034096]
+    lab_fk(thetas[0],thetas[1],thetas[2],thetas[3],thetas[4],thetas[5])
+    move_block(pub_command, loop_rate, start, 2, end, 0,thetas)
+    thetas = [2.458071665798306, -0.930855911241727, 2.2086155554443176, -2.8485559709974875,
+    -1.5707963267948966, 0.8872753390034096]
+    print("Fetching Next Card from Deck. Next Card Forward Kinematics:\n")
+    lab_fk(thetas[0],thetas[1],thetas[2],thetas[3],thetas[4],thetas[5])
+    move_block(pub_command, loop_rate, start, 2, start, 0, thetas)
 
     gripper(pub_command, loop_rate, suction_off)
 
-
+    print("Done Dealing. Moving away...")
+    move_arm(pub_command, loop_rate, Q[end][2][1], 4.0, 4.0)
 
     ############### Your Code End Here ###############
 
