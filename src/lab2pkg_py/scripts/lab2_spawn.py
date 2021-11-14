@@ -72,27 +72,27 @@ if __name__ == '__main__':
     missing_block = (missing_block == 'y')
 
     # Delete previous blocks
-    for height in range(3):
+    for height in range(2):
         block_name = 'block' + str(height + 1)
         delete(block_name)
 
 
     if not missing_block:
         # Spawn three blocks
-        for height in range(3):
+        for height in range(2):
             block_name = 'block' + str(height + 1)
             pose = Pose(Point(block_xy_pos[starting_location][height][0], 
-                            block_xy_pos[starting_location][height][1], 0), Quaternion(0, 0, 0, 0))
-            spawn(block_name, open(block_paths[2-height], 'r').read(), 'block', pose, 'world')
+                            block_xy_pos[starting_location][height][1], 0.4), Quaternion(0, 0, 0, 0))
+            spawn(block_name, open(block_paths[height], 'r').read(), 'block', pose, 'world')
     
     else:
-        missing_block_height = random.randint(0, 2)
+        missing_block_height = random.randint(0, 1)
         # Spawn two blocks
-        for height in range(3):
+        for height in range(2):
             if height == missing_block_height:
                 continue
             block_name = 'block' + str(height + 1)
             pose = Pose(Point(block_xy_pos[starting_location][height][0], 
-                            block_xy_pos[starting_location][height][1], 0), Quaternion(0, 0, 0, 0))
-            spawn(block_name, open(block_paths[2-height], 'r').read(), 'block', pose, 'world')
+                            block_xy_pos[starting_location][height][1], 0.4), Quaternion(0, 0, 0, 0))
+            spawn(block_name, open(block_paths[height], 'r').read(), 'block', pose, 'world')
 
