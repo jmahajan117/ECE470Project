@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from helper import *
 
 '''
 We get inspirations of Tower of Hanoi algorithm from the website below.
@@ -236,7 +237,7 @@ def main():
     # 2D layers (top view)
 
     # Layer (Above blocks)
-    # | Q[0][2][1] Q[1][2][1] Q[2][2][1] |   Above third block
+    # | Q[0][2][0] Q[1][2][1] Q[2][2][1] |   Above third block
     # | Q[0][1][1] Q[1][1][1] Q[2][1][1] |   Above point of second block
     # | Q[0][0][1] Q[1][0][1] Q[2][0][1] |   Above point of bottom block
 
@@ -302,55 +303,7 @@ def main():
     ############## Your Code Start Here ##############
     # TODO: modify the code below so that program can get user input
 
-    input_done = 0
-    loop_count = 0
-
-    while(not input_done):
-        input_string = raw_input("Enter number of loops <Either 1 2 3 or 0 to quit> ")
-        print("You entered " + input_string + "\n")
-
-        if(int(input_string) == 1):
-            loop_count = 1
-        elif (int(input_string) == 2):
-            loop_count = 2
-        elif (int(input_string) == 3):
-            loop_count = 3
-        elif (int(input_string) == 0):
-            print("Quitting... ")
-            sys.exit()
-        else:
-            print("Please just enter the character 1 2 3 or 0 to quit \n\n")
-            continue
-
-        input_str = raw_input("Start Loc (0, 1, 2): ")
-        print("You entered " + input_str + "\n")
-
-        if(int(input_str) == 0):
-            start = 0
-        elif (int(input_str) == 1):
-            start = 1
-        elif (int(input_str) == 2):
-            start = 2
-        else:
-            print("Error try again")
-            continue
-
-
-        input_str = raw_input("End loc (0, 1, 2): ")
-        print("You entered " + input_str + "\n")
-
-        if(int(input_str) == 0):
-            end = 0
-            input_done = 1
-        elif (int(input_str) == 1):
-            end = 1
-            input_done = 1
-        elif (int(input_str) == 2):
-            end = 2
-            input_done = 1
-        else:
-            print("Error Try again")
-            continue
+    
 
 
 
@@ -369,27 +322,30 @@ def main():
     ############## Your Code Start Here ##############
     # TODO: modify the code so that UR3 can move tower accordingly from user input
 
-    if start + end == 3:
-        middle = 0
-    if start + end == 2:
-        middle = 1
-    if start + end == 1:
-        middle = 2
-    
+    x = 150
+    y = 45
+    z = 33
 
 
-    while(loop_count > 0):
-        move_block(pub_command, loop_rate, start, 0, end, 2)
-        move_block(pub_command, loop_rate, start, 1, middle, 2)
-        move_block(pub_command, loop_rate, end, 2, middle, 1)
-        move_block(pub_command, loop_rate, start, 2, end, 2)
-        move_block(pub_command, loop_rate, middle, 1, start, 2)
-        move_block(pub_command, loop_rate, middle, 2, end, 1)
-        move_block(pub_command, loop_rate, start, 2, end, 0)
+    #SECOND CARD
+    #z = 32
 
-        loop_count = loop_count - 1
+    player_1 = []
+    player_2 = []
+    player_3 = []
 
-    gripper(pub_command, loop_rate, suction_off)
+    #move_arm(pub_command, loop_rate, home, 4, 4)
+
+    thetas = lab_invk(x, y, z, 0)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
+    gripper(pub_command, loop_rate, suction_on)
+    time.sleep(0.5)
+
+
+    #thetas = lab_invk(200, 45, 150, 0)
+    #move_arm(pub_command, loop_rate, thetas, 4, 4)
+    #gripper(pub_command, loop_rate, suction_off)
+
 
 
 

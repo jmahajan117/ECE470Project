@@ -42,7 +42,7 @@ if __name__ == '__main__':
     block1_path = os.path.join(ur_path, 'urdf', 'block_red.urdf')
     block2_path = os.path.join(ur_path, 'urdf', 'block_yellow.urdf')
     block3_path = os.path.join(ur_path, 'urdf', 'block_green.urdf')
-    block_paths = [block1_path, block2_path, block3_path]
+    block_paths = [block_path, block_path, block_path]
     # Wait for service to start
     rospy.wait_for_service('gazebo/spawn_urdf_model')
     spawn = rospy.ServiceProxy('gazebo/spawn_urdf_model', SpawnModel)
