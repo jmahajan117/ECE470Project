@@ -326,13 +326,9 @@ def main():
     y = 45
     z = 33
 
-
-    #SECOND CARD
-    #z = 32
-
-    player_1 = []
-    player_2 = []
-    player_3 = []
+    player_3 = [150, 200, 0]
+    player_2 = [300, 100, 0]
+    player_1 = [300, 0, 0]
 
     #move_arm(pub_command, loop_rate, home, 4, 4)
 
@@ -341,11 +337,66 @@ def main():
     gripper(pub_command, loop_rate, suction_on)
     time.sleep(0.5)
 
+    z = 50
+    thetas = lab_invk(x, y, z, 0)
+    time.sleep(3)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
 
-    #thetas = lab_invk(200, 45, 150, 0)
-    #move_arm(pub_command, loop_rate, thetas, 4, 4)
-    #gripper(pub_command, loop_rate, suction_off)
+    
+    
+    # MOVE TO PLAYER 1
+    thetas = lab_invk(player_1[0], player_1[1], player_1[2], 0)
+    time.sleep(1)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
+    gripper(pub_command, loop_rate, suction_off)
+    time.sleep(0.5)
 
+
+    
+    #SECOND CARD
+    z = 32
+    thetas = lab_invk(x, y, z, 0)
+    time.sleep(1)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
+    gripper(pub_command, loop_rate, suction_on)
+    time.sleep(0.5)
+
+
+    z = 50
+    thetas = lab_invk(x, y, z, 0)
+    time.sleep(1)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
+
+
+    # MOVE TO PLAYER 2
+    thetas = lab_invk(player_2[0], player_2[1], player_2[2], 0)
+    time.sleep(1)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
+    gripper(pub_command, loop_rate, suction_off)
+    time.sleep(0.5)
+
+    # THIRD CARD
+    z = 30
+    thetas = lab_invk(x, y, z, 0)
+    time.sleep(1)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
+    gripper(pub_command, loop_rate, suction_on)
+    time.sleep(0.5)
+
+    z = 50
+    thetas = lab_invk(x, y, z, 0)
+    time.sleep(1)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
+
+    # MOVE TO PLAYER 3
+    thetas = lab_invk(player_3[0], player_3[1], player_3[2], 0)
+    time.sleep(1)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
+    gripper(pub_command, loop_rate, suction_off)
+    time.sleep(0.5)
+
+
+    
 
 
 
