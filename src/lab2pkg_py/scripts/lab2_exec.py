@@ -303,8 +303,48 @@ def main():
     ############## Your Code Start Here ##############
     # TODO: modify the code below so that program can get user input
 
-    
+    numPlayers = 0
+    numCards = 0
 
+    while(numPlayers == 0):
+        input_string = raw_input("Welcome to Dealer Bot! Press the number corresponding to how many players (2-5), or 0 to quit> ")
+        print("You entered " + input_string + ".\n")
+
+        if (int(input_string) == 2):
+            numPlayers = 2
+        elif (int(input_string) == 3):
+            numPlayers = 3
+        elif (int(input_string) == 4):
+            numPlayers = 4
+        elif (int(input_string) == 5):
+            numPlayers = 5
+        elif (int(input_string) == 0):
+            print("Quitting... ")
+            sys.exit()
+        else:
+            print("Invalid Input, please try again... \n\n")
+            continue
+
+    while(numCards == 0):
+        input_string = raw_input("Press the number corresponding to how many cards each player should get, or 0 to quit> ")
+        print("You entered " + input_string + ".\n")
+
+        if(int(input_string) == 1):
+            numCards = 1
+        elif (int(input_string) == 2):
+            numCards = 2
+        elif (int(input_string) == 3):
+            numCards = 3
+        elif (int(input_string) == 4):
+            numCards = 4
+        elif (int(input_string) == 5):
+            numCards = 5
+        elif (int(input_string) == 0):
+            print("Quitting... ")
+            sys.exit()
+        else:
+            print("Invalid Input, please try again... \n\n")
+            continue
 
 
 
@@ -322,9 +362,11 @@ def main():
     ############## Your Code Start Here ##############
     # TODO: modify the code so that UR3 can move tower accordingly from user input
 
+    print ("Starting setup for " + str(numPlayers) + " players.\n")
+
     x = 150
     y = 45
-    z = 33
+    z = 38
 
     player_3 = [150, 200, 0]
     player_2 = [300, 100, 0]
@@ -339,7 +381,7 @@ def main():
 
     z = 50
     thetas = lab_invk(x, y, z, 0)
-    time.sleep(3)
+    time.sleep(1)
     move_arm(pub_command, loop_rate, thetas, 4, 4)
 
     
@@ -354,7 +396,7 @@ def main():
 
     
     #SECOND CARD
-    z = 32
+    z = 36
     thetas = lab_invk(x, y, z, 0)
     time.sleep(1)
     move_arm(pub_command, loop_rate, thetas, 4, 4)
@@ -376,7 +418,7 @@ def main():
     time.sleep(0.5)
 
     # THIRD CARD
-    z = 30
+    z = 35
     thetas = lab_invk(x, y, z, 0)
     time.sleep(1)
     move_arm(pub_command, loop_rate, thetas, 4, 4)
@@ -395,9 +437,11 @@ def main():
     gripper(pub_command, loop_rate, suction_off)
     time.sleep(0.5)
 
-
+    z = 50
+    thetas = lab_invk(x, y, z, 0)
+    time.sleep(1)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
     
-
 
 
     ############### Your Code End Here ###############
