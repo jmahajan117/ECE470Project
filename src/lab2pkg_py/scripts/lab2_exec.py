@@ -366,20 +366,21 @@ def main():
 
     x = 150
     y = 45
-    z = 38
+    
 
-    player_3 = [150, 200, 0]
-    player_2 = [300, 100, 0]
-    player_1 = [300, 0, 0]
+    player_3 = [150, 200, 60]
+    player_2 = [300, 100, 60]
+    player_1 = [300, 0, 100]
 
     #move_arm(pub_command, loop_rate, home, 4, 4)
 
+    z = 50
     thetas = lab_invk(x, y, z, 0)
     move_arm(pub_command, loop_rate, thetas, 4, 4)
     gripper(pub_command, loop_rate, suction_on)
     time.sleep(0.5)
 
-    z = 50
+    z = 35
     thetas = lab_invk(x, y, z, 0)
     time.sleep(1)
     move_arm(pub_command, loop_rate, thetas, 4, 4)
@@ -396,7 +397,7 @@ def main():
 
     
     #SECOND CARD
-    z = 36
+    z = 34
     thetas = lab_invk(x, y, z, 0)
     time.sleep(1)
     move_arm(pub_command, loop_rate, thetas, 4, 4)
@@ -417,8 +418,9 @@ def main():
     gripper(pub_command, loop_rate, suction_off)
     time.sleep(0.5)
 
+    
     # THIRD CARD
-    z = 35
+    z = 32
     thetas = lab_invk(x, y, z, 0)
     time.sleep(1)
     move_arm(pub_command, loop_rate, thetas, 4, 4)
@@ -441,7 +443,6 @@ def main():
     thetas = lab_invk(x, y, z, 0)
     time.sleep(1)
     move_arm(pub_command, loop_rate, thetas, 4, 4)
-    
 
 
     ############### Your Code End Here ###############
