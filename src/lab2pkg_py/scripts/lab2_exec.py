@@ -325,27 +325,6 @@ def main():
             print("Invalid Input, please try again... \n\n")
             continue
 
-    while(numCards == 0):
-        input_string = raw_input("Press the number corresponding to how many cards each player should get, or 0 to quit> ")
-        print("You entered " + input_string + ".\n")
-
-        if(int(input_string) == 1):
-            numCards = 1
-        elif (int(input_string) == 2):
-            numCards = 2
-        elif (int(input_string) == 3):
-            numCards = 3
-        elif (int(input_string) == 4):
-            numCards = 4
-        elif (int(input_string) == 5):
-            numCards = 5
-        elif (int(input_string) == 0):
-            print("Quitting... ")
-            sys.exit()
-        else:
-            print("Invalid Input, please try again... \n\n")
-            continue
-
 
 
 
@@ -380,7 +359,7 @@ def main():
     gripper(pub_command, loop_rate, suction_on)
     time.sleep(0.5)
 
-    z = 37
+    z = 39
     thetas = lab_invk(x, y, z, 0)
     time.sleep(1)
     move_arm(pub_command, loop_rate, thetas, 4, 4)
@@ -395,49 +374,49 @@ def main():
     time.sleep(0.5)
 
 
-    
-    #SECOND CARD
-    z = 34
-    thetas = lab_invk(x, y, z, 0)
-    time.sleep(1)
-    move_arm(pub_command, loop_rate, thetas, 4, 4)
-    gripper(pub_command, loop_rate, suction_on)
-    time.sleep(0.5)
+    if numPlayers >= 2:
+        #SECOND CARD
+        z = 37
+        thetas = lab_invk(x, y, z, 0)
+        time.sleep(1)
+        move_arm(pub_command, loop_rate, thetas, 4, 4)
+        gripper(pub_command, loop_rate, suction_on)
+        time.sleep(0.5)
 
 
-    z = 50
-    thetas = lab_invk(x, y, z, 0)
-    time.sleep(1)
-    move_arm(pub_command, loop_rate, thetas, 4, 4)
+        z = 50
+        thetas = lab_invk(x, y, z, 0)
+        time.sleep(1)
+        move_arm(pub_command, loop_rate, thetas, 4, 4)
 
 
-    # MOVE TO PLAYER 2
-    thetas = lab_invk(player_2[0], player_2[1], player_2[2], 0)
-    time.sleep(1)
-    move_arm(pub_command, loop_rate, thetas, 4, 4)
-    gripper(pub_command, loop_rate, suction_off)
-    time.sleep(0.5)
+        # MOVE TO PLAYER 2
+        thetas = lab_invk(player_2[0], player_2[1], player_2[2], 0)
+        time.sleep(1)
+        move_arm(pub_command, loop_rate, thetas, 4, 4)
+        gripper(pub_command, loop_rate, suction_off)
+        time.sleep(0.5)
 
-    
-    # THIRD CARD
-    z = 32
-    thetas = lab_invk(x, y, z, 0)
-    time.sleep(1)
-    move_arm(pub_command, loop_rate, thetas, 4, 4)
-    gripper(pub_command, loop_rate, suction_on)
-    time.sleep(0.5)
+    if numPlayers >= 3:
+        # THIRD CARD
+        z = 34
+        thetas = lab_invk(x, y, z, 0)
+        time.sleep(1)
+        move_arm(pub_command, loop_rate, thetas, 4, 4)
+        gripper(pub_command, loop_rate, suction_on)
+        time.sleep(0.5)
 
-    z = 50
-    thetas = lab_invk(x, y, z, 0)
-    time.sleep(1)
-    move_arm(pub_command, loop_rate, thetas, 4, 4)
+        z = 50
+        thetas = lab_invk(x, y, z, 0)
+        time.sleep(1)
+        move_arm(pub_command, loop_rate, thetas, 4, 4)
 
-    # MOVE TO PLAYER 3
-    thetas = lab_invk(player_3[0], player_3[1], player_3[2], 0)
-    time.sleep(1)
-    move_arm(pub_command, loop_rate, thetas, 4, 4)
-    gripper(pub_command, loop_rate, suction_off)
-    time.sleep(0.5)
+        # MOVE TO PLAYER 3
+        thetas = lab_invk(player_3[0], player_3[1], player_3[2], 0)
+        time.sleep(1)
+        move_arm(pub_command, loop_rate, thetas, 4, 4)
+        gripper(pub_command, loop_rate, suction_off)
+        time.sleep(0.5)
 
     z = 50
     thetas = lab_invk(x, y, z, 0)
