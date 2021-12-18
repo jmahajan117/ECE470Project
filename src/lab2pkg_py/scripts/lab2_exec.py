@@ -380,7 +380,7 @@ def main():
     gripper(pub_command, loop_rate, suction_on)
     time.sleep(0.5)
 
-    z = 35
+    z = 37
     thetas = lab_invk(x, y, z, 0)
     time.sleep(1)
     move_arm(pub_command, loop_rate, thetas, 4, 4)
