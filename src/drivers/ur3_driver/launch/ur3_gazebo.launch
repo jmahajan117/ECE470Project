@@ -18,10 +18,10 @@
     <arg name="limited" value="$(arg limited)"/>
   </include>
 
-  <node name="spawn_base_plate" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/base_plate.urdf -urdf -model plate -x -0.15 -y 0.15" respawn="false" output="screen" />
+  <!--node name="spawn_base_plate" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/base_plate.urdf -urdf -model plate -x -0.15 -y 0.15 -z 0.11" respawn="false" output="screen" /!-->
 
   <!-- push robot_description to factory and spawn robot in gazebo -->
-  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -x -0.15 -y 0.15 -z 0.01" respawn="false" output="screen" />
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -x -0.15 -y 0.15 -z 0.11" respawn="false" output="screen" />
 
   <include file="$(find ur_gazebo)/launch/controller_utils.launch"/>
 
@@ -32,8 +32,15 @@
   <!-- load other controllers -->
   <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false" output="screen" args="load joint_group_position_controller" />
 
-  <!-- <node name="spawn_block" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/block.urdf -urdf -model block" /> -->
+  <node name="spawn_block" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/block.urdf -urdf -model card1 -x 0.15 -y 0.045 -z 0.11" respawn="false" output="screen"/>
+  <node name="spawn_block2" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/block.urdf -urdf -model card2 -x 0.15 -y 0.045 -z 0.112" respawn="false" output="screen"/>
+  <node name="spawn_block3" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/block.urdf -urdf -model card3 -x 0.15 -y 0.045 -z 0.115" respawn="false" output="screen"/>
+  <node name="spawn_block4" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/block.urdf -urdf -model card4 -x 0.15 -y 0.045 -z 0.117" respawn="false" output="screen"/>
+  <node name="spawn_block5" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/block.urdf -urdf -model card5 -x 0.15 -y 0.045 -z 0.119" respawn="false" output="screen"/>
 
+  
+  <node name="spawn_cafe" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/table.urdf -urdf -model cafe_table -x 0.0 -y 0.0 -z 0.0" respawn="false" output="screen"/>
+  
   <node name="spawn_camera" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/camera.urdf -urdf -model camera -x 0.29 -y 0.105 -z 0.92" />
 
 	<node name="ur3_gazebo_driver_1" pkg="ur3_driver" type="ur3_gazebo_driver.py" output="screen">

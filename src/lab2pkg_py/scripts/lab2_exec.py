@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from helper import *
 
 '''
 We get inspirations of Tower of Hanoi algorithm from the website below.
@@ -396,7 +397,7 @@ def main():
     # 2D layers (top view)
 
     # Layer (Above blocks)
-    # | Q[0][2][1] Q[1][2][1] Q[2][2][1] |   Above third block
+    # | Q[0][2][0] Q[1][2][1] Q[2][2][1] |   Above third block
     # | Q[0][1][1] Q[1][1][1] Q[2][1][1] |   Above point of second block
     # | Q[0][0][1] Q[1][0][1] Q[2][0][1] |   Above point of bottom block
 
@@ -463,14 +464,12 @@ def main():
     # TODO: modify the code below so that program can get user input
 
     numPlayers = 0
-
+    numCards = 0
     while(numPlayers == 0):
-        input_string = raw_input("Welcome to Poker! Press the number corresponding to how many players (2-5), or 0 to quit> ")
-        print("You entered " + input_string + "\n")
+        input_string = raw_input("Welcome to Dealer Bot! Press the number corresponding to how many players (2-5), or 0 to quit> ")
+        print("You entered " + input_string + ".\n")
 
-        if(int(input_string) == 1):
-            numPlayers = 1
-        elif (int(input_string) == 2):
+        if (int(input_string) == 2):
             numPlayers = 2
         elif (int(input_string) == 3):
             numPlayers = 3
@@ -482,9 +481,8 @@ def main():
             print("Quitting... ")
             sys.exit()
         else:
-            print("Please just enter the character 1 2 3 or 0 to quit \n\n")
+            print("Invalid Input, please try again... \n\n")
             continue
-
     ############### Your Code End Here ###############
 
     # Check if ROS is ready for operation
@@ -497,28 +495,88 @@ def main():
 
     ############## Your Code Start Here ##############
     # TODO: modify the code so that UR3 can move tower accordingly from user input
+
+    print ("Starting setup for " + str(numPlayers) + " players.\n")
+
+    x = 150
+    y = 45
     
-    thetas = []
-    start = 0
-    end = 2
 
-    print ("Starting Poker setup for " + str(numPlayers) + " players. Deck Location Forward Kinematics:\n")
-    #print(lab_fk[thetas[0],thetas[1],thetas[2],thetas[3],thetas[4],thetas[5]])
+    player_3 = [150, 200, 60]
+    player_2 = [300, 100, 60]
+    player_1 = [300, 0, 100]
 
-    thetas = [2.458071665798306, -1.1802611048778377, 2.119906386765944, -2.3504416086830027,
-    -1.5707963267948966, 0.8872753390034096]
-    lab_fk(thetas[0],thetas[1],thetas[2],thetas[3],thetas[4],thetas[5])
-    move_block(pub_command, loop_rate, start, 2, end, 0,thetas)
-    thetas = [2.458071665798306, -0.930855911241727, 2.2086155554443176, -2.8485559709974875,
-    -1.5707963267948966, 0.8872753390034096]
-    print("Fetching Next Card from Deck. Next Card Forward Kinematics:\n")
-    lab_fk(thetas[0],thetas[1],thetas[2],thetas[3],thetas[4],thetas[5])
-    move_block(pub_command, loop_rate, start, 2, start, 0, thetas)
+    #move_arm(pub_command, loop_rate, home, 4, 4)
 
+    z = 50
+    thetas = lab_invk(x, y, z, 0)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
+    gripper(pub_command, loop_rate, suction_on)
+    time.sleep(0.5)
+
+    z = 39
+    thetas = lab_invk(x, y, z, 0)
+    time.sleep(1)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
+
+    
+    
+    # MOVE TO PLAYER 1
+    thetas = lab_invk(player_1[0], player_1[1], player_1[2], 0)
+    time.sleep(1)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
     gripper(pub_command, loop_rate, suction_off)
+    time.sleep(0.5)
 
-    print("Done Dealing. Moving away...")
-    move_arm(pub_command, loop_rate, Q[end][2][1], 4.0, 4.0)
+
+    if numPlayers >= 2:
+        #SECOND CARD
+        z = 37
+        thetas = lab_invk(x, y, z, 0)
+        time.sleep(1)
+        move_arm(pub_command, loop_rate, thetas, 4, 4)
+        gripper(pub_command, loop_rate, suction_on)
+        time.sleep(0.5)
+
+
+        z = 50
+        thetas = lab_invk(x, y, z, 0)
+        time.sleep(1)
+        move_arm(pub_command, loop_rate, thetas, 4, 4)
+
+
+        # MOVE TO PLAYER 2
+        thetas = lab_invk(player_2[0], player_2[1], player_2[2], 0)
+        time.sleep(1)
+        move_arm(pub_command, loop_rate, thetas, 4, 4)
+        gripper(pub_command, loop_rate, suction_off)
+        time.sleep(0.5)
+
+    if numPlayers >= 3:
+        # THIRD CARD
+        z = 34
+        thetas = lab_invk(x, y, z, 0)
+        time.sleep(1)
+        move_arm(pub_command, loop_rate, thetas, 4, 4)
+        gripper(pub_command, loop_rate, suction_on)
+        time.sleep(0.5)
+
+        z = 50
+        thetas = lab_invk(x, y, z, 0)
+        time.sleep(1)
+        move_arm(pub_command, loop_rate, thetas, 4, 4)
+
+        # MOVE TO PLAYER 3
+        thetas = lab_invk(player_3[0], player_3[1], player_3[2], 0)
+        time.sleep(1)
+        move_arm(pub_command, loop_rate, thetas, 4, 4)
+        gripper(pub_command, loop_rate, suction_off)
+        time.sleep(0.5)
+
+    z = 50
+    thetas = lab_invk(x, y, z, 0)
+    time.sleep(1)
+    move_arm(pub_command, loop_rate, thetas, 4, 4)
 
     ############### Your Code End Here ###############
 

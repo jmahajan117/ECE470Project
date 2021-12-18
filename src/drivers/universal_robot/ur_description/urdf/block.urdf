@@ -6,23 +6,23 @@
   <collision>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <geometry>
-      <box size="0.0318 0.0318 0.0318" />
+      <box size="0.10 0.045 0.0025" />
     </geometry>
   </collision>
 
   <visual>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <geometry>
-      <box size="0.0318 0.0318 0.0318" />
+      <box size="0.10 0.045 0.0025" />
     </geometry>
   </visual>
 
   <inertial>
    <origin xyz="0 0 0" rpy="0 0 0"/>
-   <mass value="0.0225" />
+   <mass value="0.4" />
    <inertia
-      ixx="0.00000379215" ixy="0.0"  ixz="0.0"
-      iyy="0.00000379215" iyz="0.0"  izz="0.00000379215" />
+      ixx="0.01" ixy="0.0"  ixz="0.0"
+      iyy="0.01" iyz="0.0"  izz="0.0" />
   </inertial>
 
 </link>
@@ -34,6 +34,7 @@
   <kd>1</kd>
   <maxVel>0</maxVel>
   <minDepth>0.001</minDepth>
+  <material>Gazebo/Red</material>
 </gazebo>
 
 </robot>
